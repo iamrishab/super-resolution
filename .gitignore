@@ -1,0 +1,14 @@
+# mypy
+.mypy_cache/
+.vscode
+*.idea*
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+*/__pycache__/
+
+.ipynb_checkpoints/
+

@@ -11,8 +11,33 @@
 ## What's New
 * Add [CARN Model (Fast, Accurate, and Lightweight Super-Resolution with Cascading Residual Network)](https://github.com/nmhkahn/CARN-pytorch). Model Codes are adapted from the authors's [github repo](https://github.com/nmhkahn/CARN-pytorch). I add [Spatial Channel Squeeze Excitation](https://arxiv.org/abs/1709.01507) and swap all 1x1 convolution with 3x3 standard convolutions. The model is trained in fp 16 with Nvidia's [apex](https://github.com/NVIDIA/apex). Details and plots on model variant can be found in [docs/CARN](./docs/CARN)
 
-* Dilated Convolution seems less effective (if not make the model worse) in super resolution, though it brings some improvement in image segmentation, especially when dilated rate increases and then decreases. Further investigation is needed. 
+* Dilated Convolution seems less effective (if not make the model worse) in super resolution, though it brings some improvement in image segmentation, especially when dilated rate increases and then decreases. Further investigation is needed.
 
+
+## Inference docker
+
+```
+$ docker build -t <name>:<tag> .
+
+$ docker run -v /home/user/folder:/files --net host --gpus device=0 -e NVIDIA_VISIBLE_DEVICES=0 <name>:<tag>
+```
+
+Add `-d` param in docker run to demonize it and detach it from terminal f.e.
+```
+$ docker run -d -v /home/user/folder:/files --net host --gpus device=0 -e NVIDIA_VISIBLE_DEVICES=0 <name>:<tag>
+```
+Add `--rm` param in docker run to remove itermediate container f.e.
+
+```
+$ docker run -d --rm -v /home/user/folder:/files --net host --gpus device=0 -e NVIDIA_VISIBLE_DEVICES=0 <name>:<tag>
+```
+
+## Demo 
+
+Quick testing and checking results
+```
+python infer.py --src path/to/image
+```
 
  ## Training
  
@@ -42,6 +67,4 @@ Image noise are from JPEG format only. They are added by re-encoding PNG images 
  * [Upconv7](https://github.com/nagadomi/waifu2x/blob/7d156917ae1113ab847dab15c75db7642231e7fa/lib/srcnn.lua#L360)
  
  * [Vgg_7](https://github.com/nagadomi/waifu2x/blob/7d156917ae1113ab847dab15c75db7642231e7fa/lib/srcnn.lua#L334)
- 
- * [Cascaded Residual U-Net with SEBlock](https://github.com/nagadomi/waifu2x/blob/7d156917ae1113ab847dab15c75db7642231e7fa/lib/srcnn.lua#L514) (PyTorch codes are not available and under testing)
  
